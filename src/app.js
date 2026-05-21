@@ -330,9 +330,17 @@ function bindDetailClose() {
 }
 
 function renderAssetOptions() {
-  const options = document.querySelector("#assetOptions");
-  const assets = getDistanceAssets();
-  options.innerHTML = assets.map((asset) => {
+  const originOptions = document.querySelector("#originOptions");
+  const destinationOptions = document.querySelector("#destinationOptions");
+  const origins = getOriginAssets();
+  const destinations = getDestinationAssets();
+
+  originOptions.innerHTML = origins.map((asset) => {
+    const label = `${asset.name} | ${asset.system || layerDefinition(asset.layer).label} | ${asset.address || asset.category}`;
+    return `<option value="${escapeHtml(label)}"></option>`;
+  }).join("");
+
+  destinationOptions.innerHTML = destinations.map((asset) => {
     const label = `${asset.name} | ${asset.system || layerDefinition(asset.layer).label} | ${asset.address || asset.category}`;
     return `<option value="${escapeHtml(label)}"></option>`;
   }).join("");
@@ -347,10 +355,30 @@ function getDistanceAssets() {
   ];
 }
 
+function getOriginAssets() {
+  return getDistanceAssets().filter((asset) => {
+    return asset.layer === "ocfr"
+      || asset.layer === "ofr"
+      || asset.category === "EMS Station"
+      || asset.category === "Fire/EMS Station";
+  });
+}
+
+function getDestinationAssets() {
+  return getDistanceAssets().filter((asset) => {
+    return asset.layer === "center"
+      || asset.layer === "home"
+      || asset.layer === "hca"
+      || asset.layer === "advent"
+      || asset.layer === "orlandoHealth"
+      || /hospital|er|fsed|emergency/i.test(`${asset.name} ${asset.category}`);
+  });
+}
+
 function calculateDistance() {
-  const from = resolveAsset(document.querySelector("#distanceFrom").value);
-  const to = resolveAsset(document.querySelector("#distanceTo").value);
-  const compare = resolveAsset(document.querySelector("#distanceCompare").value) || getMilleniaAsset();
+  const from = resolveAsset(document.querySelector("#distanceFrom").value, getOriginAssets());
+  const to = resolveAsset(document.querySelector("#distanceTo").value, getDestinationAssets());
+  const compare = resolveAsset(document.querySelector("#distanceCompare").value, getDestinationAssets()) || getMilleniaAsset();
   const result = document.querySelector("#distanceResult");
 
   if (!from || !to || !compare) {
@@ -397,11 +425,11 @@ function clearDistance() {
   document.querySelector("#distanceResult").classList.remove("warning");
 }
 
-function resolveAsset(value) {
+function resolveAsset(value, pool = getDistanceAssets()) {
   const query = normalizeSearch(value.split("|")[0]);
   if (!query) return null;
 
-  return getDistanceAssets().find((asset) => {
+  return pool.find((asset) => {
     const searchText = normalizeSearch([
       asset.name,
       asset.system,

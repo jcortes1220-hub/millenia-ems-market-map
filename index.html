@@ -88,17 +88,18 @@
         <div class="distance-form">
           <label>
             <span>EMS / Fire Origin</span>
-            <input id="distanceFrom" type="search" list="assetOptions" placeholder="Orange County station, Orlando Fire, EMS unit..." autocomplete="off" />
+            <input id="distanceFrom" type="search" list="originOptions" placeholder="Orange County station, Orlando Fire, EMS unit..." autocomplete="off" />
           </label>
           <label>
             <span>Destination Hospital / ER</span>
-            <input id="distanceTo" type="search" list="assetOptions" placeholder="AdventHealth Millenia, ORMC, Dr. Phillips..." autocomplete="off" />
+            <input id="distanceTo" type="search" list="destinationOptions" placeholder="AdventHealth Millenia, ORMC, Dr. Phillips..." autocomplete="off" />
           </label>
           <label>
             <span>Compare Against</span>
-            <input id="distanceCompare" type="search" list="assetOptions" value="4056 Millenia Blvd" autocomplete="off" />
+            <input id="distanceCompare" type="search" list="destinationOptions" value="4056 Millenia Blvd" autocomplete="off" />
           </label>
-          <datalist id="assetOptions"></datalist>
+          <datalist id="originOptions"></datalist>
+          <datalist id="destinationOptions"></datalist>
           <button id="calculateDistance" class="calculate-button" type="button">Compare Mileage</button>
           <div id="distanceResult" class="distance-result">Pick an EMS/fire origin and a destination to compare against HCA Millenia.</div>
         </div>
