@@ -1,9 +1,0 @@
-{
-  "name": "Millenia ER EMS Market Dashboard",
-  "short_name": "Millenia EMS",
-  "start_url": "./index.html",
-  "display": "standalone",
-  "background_color": "#f5f3ee",
-  "theme_color": "#18201f",
-  "icons": []
-}
