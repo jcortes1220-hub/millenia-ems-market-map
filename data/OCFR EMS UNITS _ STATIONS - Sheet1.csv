@@ -1,19 +1,10 @@
 Station,Unit,Address,Primary Coverage Area,Notes
-Station 33,Medic 33,"1700 S Apopka Vineland Rd, Orlando, FL 32835",MetroWest / Kirkman,Strong Millenia overlap
 Station 33,Engine 33,"1700 S Apopka Vineland Rd, Orlando, FL 32835",MetroWest / Kirkman,Fire suppression + EMS support
-Station 50,Rescue 50,"1417 29th St, Orlando, FL 32805",Central-West Orlando,Core EMS transport influence
-Station 50,Engine 50,"1417 29th St, Orlando, FL 32805",Central-West Orlando,High urban EMS activity
-Station 51,Medic 51,"1700 W Oak Ridge Rd, Orlando, FL 32809",Oak Ridge / Florida Mall corridor,Potential Millenia overlap
+Station 50,Engine 50,"1415 29th St, Orlando, FL 32805",Central-West Orlando,High urban EMS activity
 Station 51,Engine 51,"1700 W Oak Ridge Rd, Orlando, FL 32809",Oak Ridge / Florida Mall corridor,Core south corridor coverage
-Station 52,Medic 52,"4771 Sand Lake Rd, Orlando, FL 32819",Dr. Phillips / Sand Lake,Tourist + Restaurant Row influence
-Station 52,Engine 52,"4771 Sand Lake Rd, Orlando, FL 32819",Dr. Phillips / Sand Lake,Heavy visitor traffic area
-Station 53,Medic 53,"1270 La Quinta Dr, Orlando, FL 32809",Florida Mall / OBT,Major EMS corridor
+Station 52,Engine 52,"4765 W Sand Lake Rd, Orlando, FL 32819",Dr. Phillips / Sand Lake,Heavy visitor traffic area
 Station 53,Engine 53,"1270 La Quinta Dr, Orlando, FL 32809",Florida Mall / OBT,South Orlando influence
-Station 70,Medic 70,"10181 International Dr, Orlando, FL 32821",International Drive / Tourism,High tourist EMS volume
-Station 70,Engine 70,"10181 International Dr, Orlando, FL 32821",International Drive / Tourism,Convention corridor
-Station 71,Medic 71,"4405 St Florian Way, Orlando, FL 32822",Airport east corridor,Airport-related EMS activity
+Station 70,Engine 70,"1027 E Wallace St, Orlando, FL 32809",South Orlando,Corrected from the I-Drive address in the source CSV
 Station 71,Engine 71,"4405 St Florian Way, Orlando, FL 32822",Airport east corridor,East Orlando overlap
-Station 72,Medic 72,"3705 Conway Rd, Orlando, FL 32806",Conway / SoDo,Core east-side overlap
-Station 72,Engine 72,"3705 Conway Rd, Orlando, FL 32806",Conway / SoDo,High residential EMS activity
-Station 31,Medic 31,"6149 Apopka Vineland Rd, Orlando, FL 32819",Universal / I-Drive west,Tourism + resort overlap
-Station 31,Engine 31,"6149 Apopka Vineland Rd, Orlando, FL 32819",Universal / I-Drive west,West tourist corridor
+Station 72,Engine 72,"3705 Conway Rd, Orlando, FL 32812",Conway / SoDo,High residential EMS activity
+Station 31,Engine 100,"6116 S Apopka Vineland Rd, Orlando, FL 32819",Universal / I-Drive west,Official station listing shows Quint 31 and Engine 100
