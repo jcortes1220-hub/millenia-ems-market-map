@@ -1,9 +1,13 @@
 const market = window.MILLENIA_MARKET;
+const CUSTOM_PIN_STORAGE_KEY = "milleniaEmsCustomPins";
 const state = {
   visibleLayers: new Set(market.layerDefinitions.filter((layer) => layer.defaultOn).map((layer) => layer.id)),
   leafletLayers: {},
   markerIndex: [],
-  distanceLayer: L.layerGroup()
+  distanceLayer: L.layerGroup(),
+  pinEditMode: false,
+  customPins: loadCustomPins(),
+  basePins: createBasePinMap()
 };
 
 const map = L.map("map", {
@@ -148,6 +152,7 @@ function renderRings() {
 
 function renderPoints() {
   market.points.forEach((asset) => {
+    applySavedCoordinate(asset);
     const definition = layerDefinition(asset.layer);
     const icon = L.divIcon({
       className: "",
@@ -156,8 +161,12 @@ function renderPoints() {
       iconAnchor: [15, 29],
       popupAnchor: [0, -26]
     });
-    const marker = L.marker(asset.coords, { icon });
+    const marker = L.marker(asset.coords, {
+      icon,
+      draggable: state.pinEditMode
+    });
     decorateShape(marker, asset);
+    marker.on("dragend", () => handlePinDragEnd(asset, marker));
     addManagedLayer(asset.layer, marker);
     state.markerIndex.push({ asset, marker });
   });
@@ -233,6 +242,8 @@ function getLayerAssetCount(layerId) {
 function updateDetail(asset) {
   const detail = document.querySelector("#detailCard");
   detail.classList.remove("is-hidden");
+  const canEditPin = Array.isArray(asset.coords);
+  const pinWasMoved = canEditPin && Boolean(state.customPins[getAssetKey(asset)]);
   detail.innerHTML = `
     <button class="detail-close" type="button" aria-label="Close selected asset panel">×</button>
     <span class="status-pill">${asset.system || asset.type || asset.category}</span>
@@ -244,8 +255,15 @@ function updateDetail(asset) {
       <span>${asset.address || "Operational geography"}</span>
       <span>${layerDefinition(asset.layer).label}</span>
     </div>
+    ${canEditPin ? `
+      <div class="pin-tools">
+        <span>${state.pinEditMode ? "Pins unlocked: drag this marker to the correct spot." : "Pins locked. Unlock pins to move this marker."}</span>
+        <button type="button" class="text-button" data-reset-pin="${escapeHtml(getAssetKey(asset))}" ${pinWasMoved ? "" : "disabled"}>Reset Pin</button>
+      </div>
+    ` : ""}
   `;
   bindDetailClose();
+  bindPinReset();
 }
 
 function toggleLayer(layerId) {
@@ -304,6 +322,7 @@ function bindInteractions() {
 
   document.querySelector("#printView").addEventListener("click", () => window.print());
   bindDetailClose();
+  document.querySelector("#pinEditMode").addEventListener("click", togglePinEditMode);
 
   document.querySelector("#locationSearch").addEventListener("input", (event) => {
     searchAssets(event.target.value);
@@ -319,6 +338,82 @@ function bindInteractions() {
   document.querySelectorAll("[data-lens]").forEach((button) => {
     button.addEventListener("click", () => setLens(button.dataset.lens));
   });
+}
+
+function togglePinEditMode() {
+  state.pinEditMode = !state.pinEditMode;
+  document.body.classList.toggle("pin-editing", state.pinEditMode);
+
+  const button = document.querySelector("#pinEditMode");
+  button.textContent = state.pinEditMode ? "Lock Pins" : "Unlock Pins";
+  button.setAttribute("aria-pressed", state.pinEditMode);
+
+  state.markerIndex.forEach(({ marker }) => {
+    if (!marker.dragging) return;
+    if (state.pinEditMode) {
+      marker.dragging.enable();
+    } else {
+      marker.dragging.disable();
+    }
+  });
+}
+
+function handlePinDragEnd(asset, marker) {
+  const next = marker.getLatLng();
+  asset.coords = [Number(next.lat.toFixed(7)), Number(next.lng.toFixed(7))];
+  state.customPins[getAssetKey(asset)] = asset.coords;
+  saveCustomPins();
+  renderAssetOptions();
+  updateDetail(asset);
+}
+
+function getAssetKey(asset) {
+  return `${asset.layer}::${asset.name}`;
+}
+
+function applySavedCoordinate(asset) {
+  const saved = state.customPins[getAssetKey(asset)];
+  if (Array.isArray(saved) && saved.length === 2) {
+    asset.coords = saved;
+  }
+}
+
+function loadCustomPins() {
+  try {
+    return JSON.parse(localStorage.getItem(CUSTOM_PIN_STORAGE_KEY)) || {};
+  } catch {
+    return {};
+  }
+}
+
+function createBasePinMap() {
+  return Object.fromEntries(
+    market.points
+      .filter((asset) => Array.isArray(asset.coords))
+      .map((asset) => [getAssetKey(asset), [...asset.coords]])
+  );
+}
+
+function saveCustomPins() {
+  localStorage.setItem(CUSTOM_PIN_STORAGE_KEY, JSON.stringify(state.customPins));
+}
+
+function bindPinReset() {
+  const reset = document.querySelector("[data-reset-pin]");
+  if (!reset) return;
+  reset.addEventListener("click", () => {
+    const key = reset.dataset.resetPin;
+    const match = state.markerIndex.find(({ asset }) => getAssetKey(asset) === key);
+    if (!match) return;
+    delete state.customPins[key];
+    saveCustomPins();
+    const baseCoords = state.basePins[key];
+    if (!baseCoords) return;
+    match.asset.coords = baseCoords;
+    match.marker.setLatLng(baseCoords);
+    renderAssetOptions();
+    updateDetail(match.asset);
+  }, { once: true });
 }
 
 function bindDetailClose() {

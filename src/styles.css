@@ -481,6 +481,16 @@ h2 {
   text-transform: uppercase;
 }
 
+.quick-filters button[aria-pressed="true"] {
+  color: #263033;
+  background: #f2df3a;
+}
+
+body.pin-editing .map-stage {
+  outline: 4px solid rgba(242, 223, 58, 0.8);
+  outline-offset: -4px;
+}
+
 .map-canvas {
   width: 100%;
   height: 100%;
@@ -551,6 +561,35 @@ h2 {
   font-size: 11px;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.pin-tools {
+  display: grid;
+  gap: 8px;
+  margin-top: 12px;
+  border-top: 1px solid var(--line);
+  padding-top: 10px;
+  color: #6b7377;
+  font-size: 12px;
+  line-height: 1.35;
+}
+
+.pin-tools .text-button {
+  justify-self: start;
+  padding: 0;
+}
+
+.pin-tools .text-button:disabled {
+  color: #a9b0b3;
+  cursor: default;
+}
+
+body.pin-editing .marker-pin {
+  cursor: grab;
+}
+
+body.pin-editing .leaflet-drag-target .marker-pin {
+  cursor: grabbing;
 }
 
 .ops-rail {
