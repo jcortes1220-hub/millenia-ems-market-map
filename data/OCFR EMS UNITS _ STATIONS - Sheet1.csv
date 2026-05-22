@@ -1,10 +1,21 @@
-Station,Unit,Address,Primary Coverage Area,Notes
-Station 33,Engine 33,"1700 S Apopka Vineland Rd, Orlando, FL 32835",MetroWest / Kirkman,Fire suppression + EMS support
-Station 50,Engine 50,"1415 29th St, Orlando, FL 32805",Central-West Orlando,High urban EMS activity
-Station 51,Engine 51,"1700 W Oak Ridge Rd, Orlando, FL 32809",Oak Ridge / Florida Mall corridor,Core south corridor coverage
-Station 52,Engine 52,"4765 W Sand Lake Rd, Orlando, FL 32819",Dr. Phillips / Sand Lake,Heavy visitor traffic area
-Station 53,Engine 53,"1270 La Quinta Dr, Orlando, FL 32809",Florida Mall / OBT,South Orlando influence
-Station 70,Engine 70,"1027 E Wallace St, Orlando, FL 32809",South Orlando,Corrected from the I-Drive address in the source CSV
-Station 71,Engine 71,"4405 St Florian Way, Orlando, FL 32822",Airport east corridor,East Orlando overlap
-Station 72,Engine 72,"3705 Conway Rd, Orlando, FL 32812",Conway / SoDo,High residential EMS activity
-Station 31,Engine 100,"6116 S Apopka Vineland Rd, Orlando, FL 32819",Universal / I-Drive west,Official station listing shows Quint 31 and Engine 100
+Station,Address,Latitude,Longitude,Notes
+Orange County Fire Station 36,"12252 Winter Garden Vineland Rd, Orlando, FL 32836",28.3867,-81.5485,User-provided trusted coordinate
+Orange County Fire Station 41,"4412 Fairview Ave, Orlando, FL 32804",28.5962,-81.4378,User-provided trusted coordinate
+Orange County Fire Station 42,"5420 Silver Star Rd, Orlando, FL 32808",28.5779,-81.4512,User-provided trusted coordinate
+Orange County Fire Station 50,"1415 29th St, Orlando, FL 32805",28.5112,-81.4018,User-provided trusted coordinate
+Orange County Fire Station 51,"1700 W Oak Ridge Rd, Orlando, FL 32809",28.4718,-81.4045,User-provided trusted coordinate
+Orange County Fire Station 52,"4765 W Sand Lake Rd, Orlando, FL 32819",28.4505,-81.4467,User-provided trusted coordinate
+Orange County Fire Station 53,"1270 LaQuinta Dr, Orlando, FL 32809",28.4345,-81.3843,User-provided trusted coordinate
+Orange County Fire Station 54,"6500 Central Florida Pkwy, Orlando, FL 32821",28.4115,-81.4674,User-provided trusted coordinate
+Orange County Fire Station 55,"801 Greenway Professional Ct, Orlando, FL 32824",28.3566,-81.3592,User-provided trusted coordinate
+Orange County Fire Station 56,"13303 International Dr, Orlando, FL 32821",28.3944,-81.4698,User-provided trusted coordinate
+Orange County Fire Station 57,"6014 Destination Pkwy, Orlando, FL 32819",28.4247,-81.4585,User-provided trusted coordinate
+Orange County Fire Station 58,"2900 Deerfield Blvd, Orlando, FL 32837",28.3617,-81.4148,User-provided trusted coordinate
+Orange County Fire Station 63,"2450 N Goldenrod Rd, Winter Park, FL 32792",28.5752,-81.2868,User-provided trusted coordinate
+Orange County Fire Station 66,"996 N Semoran Blvd, Orlando, FL 32807",28.5604,-81.3092,User-provided trusted coordinate
+Orange County Fire Station 68,"1945 S Goldenrod Rd, Orlando, FL 32822",28.5207,-81.2869,User-provided trusted coordinate
+Orange County Fire Station 70,"1027 E Wallace St, Orlando, FL 32806",28.4588,-81.3652,User-provided trusted coordinate
+Orange County Fire Station 72,"3705 S Conway Rd, Orlando, FL 32812",28.5034,-81.3308,User-provided trusted coordinate
+Orange County Fire Station 73,"811 First St, Orlando, FL 32824",28.3874,-81.3761,User-provided trusted coordinate
+Orange County Fire Station 76,"11351 Narcoossee Rd, Orlando, FL 32832",28.3942,-81.2459,User-provided trusted coordinate
+Orange County Fire Station 77,"11501 Moss Park Rd, Orlando, FL 32832",28.4080,-81.2274,User-provided trusted coordinate

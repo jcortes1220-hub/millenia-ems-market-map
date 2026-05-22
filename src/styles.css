@@ -574,6 +574,12 @@ body.pin-editing .map-stage {
   line-height: 1.35;
 }
 
+.pin-tools small {
+  color: #879095;
+  font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: 11px;
+}
+
 .pin-tools .text-button {
   justify-self: start;
   padding: 0;

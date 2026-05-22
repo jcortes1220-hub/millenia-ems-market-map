@@ -1,11 +1,12 @@
 const market = window.MILLENIA_MARKET;
-const CUSTOM_PIN_STORAGE_KEY = "milleniaEmsCustomPins";
+const CUSTOM_PIN_STORAGE_KEY = "milleniaEmsCustomPinsV8";
 const state = {
   visibleLayers: new Set(market.layerDefinitions.filter((layer) => layer.defaultOn).map((layer) => layer.id)),
   leafletLayers: {},
   markerIndex: [],
   distanceLayer: L.layerGroup(),
   pinEditMode: false,
+  selectedPin: null,
   customPins: loadCustomPins(),
   basePins: createBasePinMap()
 };
@@ -166,6 +167,11 @@ function renderPoints() {
       draggable: state.pinEditMode
     });
     decorateShape(marker, asset);
+    marker.on("click", (event) => {
+      L.DomEvent.stopPropagation(event);
+      state.selectedPin = { asset, marker };
+      updateDetail(asset);
+    });
     marker.on("dragend", () => handlePinDragEnd(asset, marker));
     addManagedLayer(asset.layer, marker);
     state.markerIndex.push({ asset, marker });
@@ -243,6 +249,7 @@ function updateDetail(asset) {
   const detail = document.querySelector("#detailCard");
   detail.classList.remove("is-hidden");
   const canEditPin = Array.isArray(asset.coords);
+  const coordsText = canEditPin ? `${asset.coords[0].toFixed(6)}, ${asset.coords[1].toFixed(6)}` : "";
   const pinWasMoved = canEditPin && Boolean(state.customPins[getAssetKey(asset)]);
   detail.innerHTML = `
     <button class="detail-close" type="button" aria-label="Close selected asset panel">×</button>
@@ -257,12 +264,15 @@ function updateDetail(asset) {
     </div>
     ${canEditPin ? `
       <div class="pin-tools">
-        <span>${state.pinEditMode ? "Pins unlocked: drag this marker to the correct spot." : "Pins locked. Unlock pins to move this marker."}</span>
+        <span>${state.pinEditMode ? "Pins unlocked: click the correct map spot or drag this marker." : "Pins locked. Click Unlock Pins to move this marker."}</span>
+        <small>Current pin: ${coordsText}</small>
+        <button type="button" class="text-button" data-toggle-pin-edit>${state.pinEditMode ? "Lock Pins" : "Unlock Pins"}</button>
         <button type="button" class="text-button" data-reset-pin="${escapeHtml(getAssetKey(asset))}" ${pinWasMoved ? "" : "disabled"}>Reset Pin</button>
       </div>
     ` : ""}
   `;
   bindDetailClose();
+  bindDetailPinToggle();
   bindPinReset();
 }
 
@@ -323,6 +333,7 @@ function bindInteractions() {
   document.querySelector("#printView").addEventListener("click", () => window.print());
   bindDetailClose();
   document.querySelector("#pinEditMode").addEventListener("click", togglePinEditMode);
+  map.on("click", handleMapPinPlacement);
 
   document.querySelector("#locationSearch").addEventListener("input", (event) => {
     searchAssets(event.target.value);
@@ -330,6 +341,11 @@ function bindInteractions() {
 
   document.querySelector("#calculateDistance").addEventListener("click", calculateDistance);
   document.querySelector("#clearDistance").addEventListener("click", clearDistance);
+  ["#distanceFrom", "#distanceTo", "#distanceCompare"].forEach((selector) => {
+    document.querySelector(selector).addEventListener("input", () => {
+      state.distanceLayer.clearLayers();
+    });
+  });
 
   document.querySelectorAll("[data-focus]").forEach((button) => {
     button.addEventListener("click", () => focusMap(button.dataset.focus));
@@ -342,6 +358,10 @@ function bindInteractions() {
 
 function togglePinEditMode() {
   state.pinEditMode = !state.pinEditMode;
+  syncPinEditMode();
+}
+
+function syncPinEditMode() {
   document.body.classList.toggle("pin-editing", state.pinEditMode);
 
   const button = document.querySelector("#pinEditMode");
@@ -356,11 +376,25 @@ function togglePinEditMode() {
       marker.dragging.disable();
     }
   });
+
+  if (state.selectedPin) {
+    updateDetail(state.selectedPin.asset);
+  }
 }
 
 function handlePinDragEnd(asset, marker) {
   const next = marker.getLatLng();
-  asset.coords = [Number(next.lat.toFixed(7)), Number(next.lng.toFixed(7))];
+  savePinCoordinate(asset, marker, [next.lat, next.lng]);
+}
+
+function handleMapPinPlacement(event) {
+  if (!state.pinEditMode || !state.selectedPin) return;
+  savePinCoordinate(state.selectedPin.asset, state.selectedPin.marker, [event.latlng.lat, event.latlng.lng]);
+}
+
+function savePinCoordinate(asset, marker, coords) {
+  asset.coords = [Number(coords[0].toFixed(7)), Number(coords[1].toFixed(7))];
+  marker.setLatLng(asset.coords);
   state.customPins[getAssetKey(asset)] = asset.coords;
   saveCustomPins();
   renderAssetOptions();
@@ -398,6 +432,14 @@ function saveCustomPins() {
   localStorage.setItem(CUSTOM_PIN_STORAGE_KEY, JSON.stringify(state.customPins));
 }
 
+function bindDetailPinToggle() {
+  const toggle = document.querySelector("[data-toggle-pin-edit]");
+  if (!toggle) return;
+  toggle.addEventListener("click", () => {
+    togglePinEditMode();
+  }, { once: true });
+}
+
 function bindPinReset() {
   const reset = document.querySelector("[data-reset-pin]");
   if (!reset) return;
@@ -431,14 +473,18 @@ function renderAssetOptions() {
   const destinations = getDestinationAssets();
 
   originOptions.innerHTML = origins.map((asset) => {
-    const label = `${asset.name} | ${asset.system || layerDefinition(asset.layer).label} | ${asset.address || asset.category}`;
+    const label = getAssetOptionLabel(asset);
     return `<option value="${escapeHtml(label)}"></option>`;
   }).join("");
 
   destinationOptions.innerHTML = destinations.map((asset) => {
-    const label = `${asset.name} | ${asset.system || layerDefinition(asset.layer).label} | ${asset.address || asset.category}`;
+    const label = getAssetOptionLabel(asset);
     return `<option value="${escapeHtml(label)}"></option>`;
   }).join("");
+}
+
+function getAssetOptionLabel(asset) {
+  return `${asset.name} | ${asset.system || layerDefinition(asset.layer).label} | ${asset.address || asset.category}`;
 }
 
 function getDistanceAssets() {
@@ -477,7 +523,7 @@ function calculateDistance() {
   const result = document.querySelector("#distanceResult");
 
   if (!from || !to || !compare) {
-    result.textContent = "I need an EMS/fire origin and a destination. Try Station 33, OCFR Station 70, Orlando Fire Station 11, AdventHealth Millenia, ORMC, or 4056 Millenia Blvd.";
+    result.textContent = "I need an EMS/fire origin and a destination. Try Orange County Fire Station 36, Orlando Fire Station 10, AdventHealth Millenia, ORMC, or 4056 Millenia Blvd.";
     result.classList.add("warning");
     return;
   }
@@ -521,10 +567,21 @@ function clearDistance() {
 }
 
 function resolveAsset(value, pool = getDistanceAssets()) {
-  const query = normalizeSearch(value.split("|")[0]);
+  const rawValue = value.trim();
+  const rawName = rawValue.split("|")[0].trim();
+  const query = normalizeSearch(rawName);
   if (!query) return null;
 
-  return pool.find((asset) => {
+  const exactLabelMatch = pool.find((asset) => normalizeSearch(getAssetOptionLabel(asset)) === normalizeSearch(rawValue));
+  if (exactLabelMatch) return exactLabelMatch;
+
+  const exactNameMatch = pool.find((asset) => normalizeSearch(asset.name) === query);
+  if (exactNameMatch) return exactNameMatch;
+
+  const stationMatch = resolveStationAsset(query, pool);
+  if (stationMatch) return stationMatch;
+
+  const strongMatch = pool.find((asset) => {
     const searchText = normalizeSearch([
       asset.name,
       asset.system,
@@ -533,11 +590,30 @@ function resolveAsset(value, pool = getDistanceAssets()) {
       asset.priority,
       ...(asset.aliases || [])
     ].filter(Boolean).join(" "));
-    const queryTokens = query.split(" ").filter((token) => token.length > 2);
-    return searchText.includes(query)
-      || query.includes(normalizeSearch(asset.name))
-      || queryTokens.every((token) => searchText.includes(token));
-  }) || null;
+    return searchText.includes(query) || query.includes(normalizeSearch(asset.name));
+  });
+
+  if (strongMatch) return strongMatch;
+
+  return null;
+}
+
+function resolveStationAsset(query, pool) {
+  const stationNumber = query.match(/(?:station|engine|rescue|medic|fire)\s*(\d+)/)?.[1];
+  if (!stationNumber) return null;
+
+  const wantsOrlando = query.includes("orlando") || query.includes("orl") || query.includes("ofr");
+  const wantsOrangeCounty = query.includes("orange county") || query.includes("ocfr");
+  const candidates = pool.filter((asset) => {
+    const assetText = normalizeSearch(`${asset.name} ${asset.system}`);
+    const stationMatches = new RegExp(`(?:station|engine|rescue|medic|fire) ${stationNumber}\\b`).test(assetText);
+    if (!stationMatches) return false;
+    if (wantsOrlando) return asset.layer === "ofr";
+    if (wantsOrangeCounty) return asset.layer === "ocfr";
+    return true;
+  });
+
+  return candidates[0] || null;
 }
 
 function normalizeSearch(value) {
