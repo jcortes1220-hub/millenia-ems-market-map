@@ -11,6 +11,16 @@ window.MILLENIA_MARKET = {
     { id: "home", label: "Home Base", description: "Home Base Hospital", color: "#f28c28", defaultOn: true },
     { id: "ofr", label: "ORL Fire", description: "All items", color: "#5b463e", defaultOn: true },
     { id: "hca", label: "HCA FSED Sisters", description: "All items", color: "#f28c28", defaultOn: true },
+    {
+      id: "growth-opportunity-corridors",
+      name: "GROWTH OPPORTUNITY CORRIDORS",
+      subtitle: "ZIP-Based Demographic Trends",
+      count: 8,
+      color: "#4f9b8f",
+      category: "market",
+      description: "ZIP-based demographic trends highlighting multilingual population growth, care access needs, and community demand signals across West Orlando and Millenia-adjacent corridors.",
+      defaultOn: true
+    },
     { id: "ops", label: "EMS Operations", description: "Corridors and demand overlays", color: "#18201f", defaultOn: true }
   ],
   marketZipCodes: {
@@ -68,7 +78,7 @@ window.MILLENIA_MARKET = {
     { layer: "home", name: "Home Base Hospital", system: "Home Base Layer", category: "Hospital", address: "700 W Oak St, Orlando, FL 32805", coords: [28.3002, -81.4111], priority: "Source layer", notes: "Imported from the HOME BASE layer. This point is separate from the Millenia ER center point and can be used for distance comparisons or transfer-market context." },
 
     { layer: "hca", name: "HCA Florida Airport North Emergency", system: "HCA Florida", category: "Sister FSED", address: "5597 Lee Vista Blvd, Orlando, FL 32812", coords: [28.4705, -81.3075], priority: "Network", notes: "Pin updated from user-provided HCA coordinate list." },
-    { layer: "hca", name: "HCA Florida Hunter's Creek Emergency", system: "HCA Florida", category: "Sister FSED", address: "12100 S John Young Pkwy, Orlando, FL 32837", coords: [28.3625, -81.4257], priority: "Network", notes: "Pin updated from user-provided HCA coordinate list." },
+    { layer: "hca", name: "HCA Florida Hunter's Creek Emergency", system: "HCA Florida", category: "Sister FSED", address: "12100 S John Young Pkwy, Orlando, FL 32837", coords: [28.390763, -81.426131], priority: "Network", notes: "Pin updated from user-provided HCA coordinate list." },
     { layer: "hca", name: "HCA Florida Baldwin Park Emergency", system: "HCA Florida", category: "Sister FSED", address: "", coords: [28.5793, -81.3090], priority: "Network", notes: "Pin updated from user-provided HCA coordinate list." },
     { layer: "hca", name: "HCA Florida Maitland Emergency", system: "HCA Florida", category: "Sister FSED", address: "", coords: [28.6468, -81.4145], priority: "Network", notes: "Pin updated from user-provided HCA coordinate list." },
     { layer: "hca", name: "HCA Florida Downtown Emergency", system: "HCA Florida", category: "Sister FSED", address: "", coords: [28.5707, -81.3894], priority: "Network", notes: "Pin updated from user-provided HCA coordinate list." },
@@ -93,7 +103,7 @@ window.MILLENIA_MARKET = {
     { layer: "advent", name: "AdventHealth Centra Care Hunter's Creek", system: "AdventHealth", category: "Centra Care", address: "3299 Greenwald Way N, Kissimmee, FL 34741", coords: [28.3364, -81.4257], priority: "South competitor", notes: "Pin updated from user-provided AdventHealth coordinate list." },
 
     { layer: "orlandoHealth", name: "Orlando Health Orlando Regional Medical Center", system: "Orlando Health", category: "Main Hospital", address: "52 W Underwood St, Orlando, FL 32806", coords: [28.523163, -81.381689], priority: "Trauma", notes: "Pin updated from user-provided Orlando Health coordinate list." },
-    { layer: "orlandoHealth", name: "Orlando Health Dr. P. Phillips Hospital", system: "Orlando Health", category: "Main Hospital", address: "9400 Turkey Lake Rd, Orlando, FL 32819", coords: [28.432961, -81.482784], priority: "Tourism", notes: "Pin updated from user-provided Orlando Health coordinate list." },
+    { layer: "orlandoHealth", name: "Orlando Health Dr. P. Phillips Hospital", system: "Orlando Health", category: "Main Hospital", address: "9400 Turkey Lake Rd, Orlando, FL 32819", coords: [28.429430, -81.478643], priority: "Tourism", notes: "Pin updated from user-provided Orlando Health coordinate list." },
     { layer: "orlandoHealth", name: "Orlando Health Health Central Hospital", system: "Orlando Health", category: "Main Hospital", address: "10000 W Colonial Dr, Ocoee, FL 34761", coords: [28.552160, -81.528553], priority: "West", notes: "Pin updated from user-provided Orlando Health coordinate list." },
     { layer: "orlandoHealth", name: "Orlando Health Horizon West Hospital", system: "Orlando Health", category: "Main Hospital", address: "17000 Porter Rd, Winter Garden, FL 34787", coords: [28.495919, -81.617420], priority: "Growth", notes: "Pin updated from user-provided Orlando Health coordinate list." },
     { layer: "orlandoHealth", name: "Orlando Health Winnie Palmer Hospital for Women & Babies", system: "Orlando Health", category: "Women & Babies Hospital", address: "83 W Miller St, Orlando, FL 32806", coords: [28.5214, -81.3781], priority: "Specialty", notes: "Pin updated from user-provided Orlando Health coordinate list." },
@@ -109,12 +119,12 @@ window.MILLENIA_MARKET = {
     { layer: "ocfr", name: "Orange County Fire Station 42", system: "Orange County Fire Rescue", category: "EMS Station", address: "5420 Silver Star Rd, Orlando, FL 32808", coords: [28.5779, -81.4512], priority: "OCFR", notes: "Pin updated from user-provided Orange County Fire Rescue coordinate list." },
     { layer: "ocfr", name: "Orange County Fire Station 50", system: "Orange County Fire Rescue", category: "EMS Station", address: "1415 29th St, Orlando, FL 32805", coords: [28.5112, -81.4018], priority: "OCFR", notes: "Pin updated from user-provided Orange County Fire Rescue coordinate list." },
     { layer: "ocfr", name: "Orange County Fire Station 51", system: "Orange County Fire Rescue", category: "EMS Station", address: "1700 W Oak Ridge Rd, Orlando, FL 32809", coords: [28.4718, -81.4045], priority: "OCFR", notes: "Pin updated from user-provided Orange County Fire Rescue coordinate list." },
-    { layer: "ocfr", name: "Orange County Fire Station 52", system: "Orange County Fire Rescue", category: "EMS Station", address: "4765 W Sand Lake Rd, Orlando, FL 32819", coords: [28.4505, -81.4467], priority: "OCFR", notes: "Pin updated from user-provided Orange County Fire Rescue coordinate list." },
+    { layer: "ocfr", name: "Orange County Fire Station 52", system: "Orange County Fire Rescue", category: "EMS Station", address: "4765 W Sand Lake Rd, Orlando, FL 32819", coords: [28.450761, -81.441543], priority: "OCFR", notes: "Pin updated from user-provided Orange County Fire Rescue coordinate list." },
     { layer: "ocfr", name: "Orange County Fire Station 53", system: "Orange County Fire Rescue", category: "EMS Station", address: "1270 LaQuinta Dr, Orlando, FL 32809", coords: [28.4345, -81.3843], priority: "OCFR", notes: "Pin updated from user-provided Orange County Fire Rescue coordinate list." },
-    { layer: "ocfr", name: "Orange County Fire Station 54", system: "Orange County Fire Rescue", category: "EMS Station", address: "6500 Central Florida Pkwy, Orlando, FL 32821", coords: [28.4115, -81.4674], priority: "OCFR", notes: "Pin updated from user-provided Orange County Fire Rescue coordinate list." },
+    { layer: "ocfr", name: "Orange County Fire Station 54", system: "Orange County Fire Rescue", category: "EMS Station", address: "6500 Central Florida Pkwy, Orlando, FL 32821", coords: [28.403877, -81.464964], priority: "OCFR", notes: "Pin updated from user-provided Orange County Fire Rescue coordinate list." },
     { layer: "ocfr", name: "Orange County Fire Station 55", system: "Orange County Fire Rescue", category: "EMS Station", address: "801 Greenway Professional Ct, Orlando, FL 32824", coords: [28.3566, -81.3592], priority: "OCFR", notes: "Pin updated from user-provided Orange County Fire Rescue coordinate list." },
-    { layer: "ocfr", name: "Orange County Fire Station 56", system: "Orange County Fire Rescue", category: "EMS Station", address: "13303 International Dr, Orlando, FL 32821", coords: [28.3944, -81.4698], priority: "OCFR", notes: "Pin updated from user-provided Orange County Fire Rescue coordinate list." },
-    { layer: "ocfr", name: "Orange County Fire Station 57", system: "Orange County Fire Rescue", category: "EMS Station", address: "6014 Destination Pkwy, Orlando, FL 32819", coords: [28.4247, -81.4585], priority: "OCFR", notes: "Pin updated from user-provided Orange County Fire Rescue coordinate list." },
+    { layer: "ocfr", name: "Orange County Fire Station 56", system: "Orange County Fire Rescue", category: "EMS Station", address: "13303 International Dr, Orlando, FL 32821", coords: [28.4190, -81.4637], priority: "OCFR", notes: "Pin updated from user-provided Orange County Fire Rescue coordinate list." },
+    { layer: "ocfr", name: "Orange County Fire Station 57", system: "Orange County Fire Rescue", category: "EMS Station", address: "6014 Destination Pkwy, Orlando, FL 32819", coords: [28.423403, -81.459045], priority: "OCFR", notes: "Pin updated from user-provided Orange County Fire Rescue coordinate list." },
     { layer: "ocfr", name: "Orange County Fire Station 58", system: "Orange County Fire Rescue", category: "EMS Station", address: "2900 Deerfield Blvd, Orlando, FL 32837", coords: [28.3617, -81.4148], priority: "OCFR", notes: "Pin updated from user-provided Orange County Fire Rescue coordinate list." },
     { layer: "ocfr", name: "Orange County Fire Station 63", system: "Orange County Fire Rescue", category: "EMS Station", address: "2450 N Goldenrod Rd, Winter Park, FL 32792", coords: [28.5752, -81.2868], priority: "OCFR", notes: "Pin updated from user-provided Orange County Fire Rescue coordinate list." },
     { layer: "ocfr", name: "Orange County Fire Station 66", system: "Orange County Fire Rescue", category: "EMS Station", address: "996 N Semoran Blvd, Orlando, FL 32807", coords: [28.5604, -81.3092], priority: "OCFR", notes: "Pin updated from user-provided Orange County Fire Rescue coordinate list." },
@@ -136,7 +146,7 @@ window.MILLENIA_MARKET = {
     { layer: "ofr", name: "Orlando Fire Station 9", system: "Orlando Fire Rescue", category: "Fire/EMS Station", address: "3856 Center Loop, Orlando, FL 32808", coords: [28.5862, -81.4470], priority: "OFR", notes: "Pin updated from user-provided Orlando Fire Rescue coordinate list." },
     { layer: "ofr", name: "Orlando Fire Station 10", system: "Orlando Fire Rescue", category: "Fire/EMS Station", address: "5655 Vineland Rd, Orlando, FL 32819", coords: [28.482963, -81.456298], priority: "OFR", notes: "Pin updated from user-provided Orlando Fire Rescue coordinate list." },
     { layer: "ofr", name: "Orlando Fire Station 11", system: "Orlando Fire Rescue", category: "Fire/EMS Station", address: "4925 Curry Ford Rd, Orlando, FL 32812", coords: [28.5246, -81.3252], priority: "OFR", notes: "Pin updated from user-provided Orlando Fire Rescue coordinate list." },
-    { layer: "ofr", name: "Orlando Fire Station 12", system: "Orlando Fire Rescue", category: "Fire/EMS Station", address: "1588 Park Center Dr, Orlando, FL 32835", coords: [28.5262, -81.4718], priority: "OFR", notes: "Pin updated from user-provided Orlando Fire Rescue coordinate list." },
+    { layer: "ofr", name: "Orlando Fire Station 12", system: "Orlando Fire Rescue", category: "Fire/EMS Station", address: "1588 Park Center Dr, Orlando, FL 32835", coords: [28.5419, -81.4411], priority: "OFR", notes: "Pin updated from user-provided Orlando Fire Rescue coordinate list." },
     { layer: "ofr", name: "Orlando Fire Station 13", system: "Orlando Fire Rescue", category: "Fire/EMS Station", address: "330 S Kirkman Rd, Orlando, FL 32811", coords: [28.5380, -81.4593], priority: "OFR", notes: "Pin updated from user-provided Orlando Fire Rescue coordinate list." },
     { layer: "ofr", name: "Orlando Fire Station 14", system: "Orlando Fire Rescue", category: "Fire/EMS Station", address: "1900 S Orange Blossom Trail, Orlando, FL 32805", coords: [28.5185, -81.3954], priority: "OFR", notes: "Pin updated from user-provided Orlando Fire Rescue coordinate list." },
     { layer: "ofr", name: "Orlando Fire Station 15", system: "Orlando Fire Rescue", category: "Fire/EMS Station", address: "10181 University Blvd, Orlando, FL 32817", coords: [28.5976, -81.2434], priority: "OFR", notes: "Pin updated from user-provided Orlando Fire Rescue coordinate list." },
@@ -145,8 +155,8 @@ window.MILLENIA_MARKET = {
   ],
   routes: [
     { layer: "ops", name: "Millenia to ORMC Transfer Corridor", category: "Transfer Route", color: "#18201f", from: [28.491343, -81.427606], to: [28.523163, -81.381689], priority: "Trauma", notes: "I-4 east/north movement toward downtown tertiary care." },
-    { layer: "ops", name: "Millenia to Dr. Phillips Corridor", category: "Tourism Route", color: "#c75b12", from: [28.491343, -81.427606], to: [28.432961, -81.482784], priority: "Tourism", notes: "Sand Lake and Turkey Lake competitive destination corridor." },
-    { layer: "ops", name: "John Young / Hunters Creek Corridor", category: "EMS Corridor", color: "#0f766e", from: [28.491343, -81.427606], to: [28.3625, -81.4257], priority: "South", notes: "North-south EMS movement through Oak Ridge, Hunters Creek, and Osceola approach." },
+    { layer: "ops", name: "Millenia to Dr. Phillips Corridor", category: "Tourism Route", color: "#c75b12", from: [28.491343, -81.427606], to: [28.429430, -81.478643], priority: "Tourism", notes: "Sand Lake and Turkey Lake competitive destination corridor." },
+    { layer: "ops", name: "John Young / Hunters Creek Corridor", category: "EMS Corridor", color: "#0f766e", from: [28.491343, -81.427606], to: [28.390763, -81.426131], priority: "South", notes: "North-south EMS movement through Oak Ridge, Hunters Creek, and Osceola approach." },
     { layer: "ops", name: "Kirkman / MetroWest Corridor", category: "EMS Corridor", color: "#6750a4", from: [28.491343, -81.427606], to: [28.5207, -81.5092], priority: "Growth", notes: "MetroWest, Universal, and Conroy relationship route." },
     { layer: "ops", name: "Airport North / 528 Corridor", category: "Growth Corridor", color: "#2f6f9f", from: [28.491343, -81.427606], to: [28.4705, -81.3075], priority: "East", notes: "Connects Millenia market intelligence to Airport North HCA sister FSED context." }
   ],
@@ -156,10 +166,20 @@ window.MILLENIA_MARKET = {
     { layer: "ops", name: "Oak Ridge / John Young Demand Node", coords: [28.4660, -81.4219], radius: 1450, intensity: "Moderate", color: "#3f7d48", notes: "Residential EMS demand and south corridor access." },
     { layer: "ops", name: "I-Drive / Convention Demand Node", coords: [28.4149, -81.4610], radius: 1600, intensity: "High", color: "#c79824", notes: "Tourism and convention corridor pressure near International Drive." }
   ],
+  growthOpportunityCorridors: [
+    { layer: "growth-opportunity-corridors", zip: "32818", name: "ZIP 32818 Growth Opportunity Corridor", area: "Pine Hills / West Orlando", coords: [28.5835, -81.5005], trendPercent: 19.63, estimatedPopulation: 12280, category: "ZIP-Based Demographic Trend", priority: "Highest community demand signal", source: "ZipAtlas", notes: "ZipAtlas-derived demographic trend signal for Pine Hills / West Orlando." },
+    { layer: "growth-opportunity-corridors", zip: "32808", name: "ZIP 32808 Growth Opportunity Corridor", area: "West Orlando", coords: [28.5806, -81.4383], trendPercent: 18.53, estimatedPopulation: 11639, category: "ZIP-Based Demographic Trend", priority: "Highest community demand signal", source: "ZipAtlas", notes: "ZipAtlas-derived demographic trend signal for West Orlando." },
+    { layer: "growth-opportunity-corridors", zip: "32805", name: "ZIP 32805 Growth Opportunity Corridor", area: "Holden Heights / Rio Grande", coords: [28.5323, -81.4028], trendPercent: 8.23, estimatedPopulation: 1464, category: "ZIP-Based Demographic Trend", priority: "Core cultural access", source: "ZipAtlas", notes: "ZipAtlas-derived demographic trend signal for Holden Heights / Rio Grande." },
+    { layer: "growth-opportunity-corridors", zip: "32810", name: "ZIP 32810 Growth Opportunity Corridor", area: "Northwest Orlando", coords: [28.6254, -81.4086], trendPercent: 6.99, estimatedPopulation: 2638, category: "ZIP-Based Demographic Trend", priority: "Northwest access", source: "ZipAtlas", notes: "ZipAtlas-derived demographic trend signal for Northwest Orlando." },
+    { layer: "growth-opportunity-corridors", zip: "32839", name: "ZIP 32839 Growth Opportunity Corridor", area: "Millenia / Oak Ridge", coords: [28.4884, -81.4082], trendPercent: 6.88, estimatedPopulation: 3391, category: "ZIP-Based Demographic Trend", priority: "Millenia core", source: "ZipAtlas", notes: "ZipAtlas-derived demographic trend signal for Millenia / Oak Ridge, including HCA Millenia's home ZIP." },
+    { layer: "growth-opportunity-corridors", zip: "32835", name: "ZIP 32835 Growth Opportunity Corridor", area: "MetroWest", coords: [28.5255, -81.4895], trendPercent: 6.39, estimatedPopulation: 3186, category: "ZIP-Based Demographic Trend", priority: "West corridor access", source: "ZipAtlas", notes: "ZipAtlas-derived demographic trend signal for MetroWest." },
+    { layer: "growth-opportunity-corridors", zip: "32811", name: "ZIP 32811 Growth Opportunity Corridor", area: "Kirkman / Malibu Groves", coords: [28.5221, -81.4439], trendPercent: 4.42, estimatedPopulation: 1777, category: "ZIP-Based Demographic Trend", priority: "Kirkman corridor", source: "ZipAtlas", notes: "ZipAtlas-derived demographic trend signal for Kirkman / Malibu Groves." },
+    { layer: "growth-opportunity-corridors", zip: "32809", name: "ZIP 32809 Growth Opportunity Corridor", area: "Sky Lake / Oak Ridge South", coords: [28.4566, -81.3986], trendPercent: 3.46, estimatedPopulation: 1011, category: "ZIP-Based Demographic Trend", priority: "South core access", source: "ZipAtlas", notes: "ZipAtlas-derived demographic trend signal for Sky Lake / Oak Ridge South." }
+  ],
   lensNarratives: {
-    executive: "Executive lens emphasizes source-backed market share pressure: the core ZIP cluster overlaps intense AdventHealth and Orlando Health competition inside the 10-mile Millenia operating ring.",
+    executive: "Executive lens emphasizes source-backed market share pressure: the core ZIP cluster overlaps intense AdventHealth and Orlando Health competition inside the 10-mile Millenia operating ring, plus multilingual population growth trends and language-access demand signals across West Orlando and Millenia-adjacent ZIP corridors.",
     ems: "EMS lens highlights unit-level OCFR assets, Orlando Fire station proximity, and destination choices along I-4, Kirkman, Conroy, John Young, Sand Lake, and 528.",
-    growth: "Growth lens expands beyond the core ZIP set into Horizon West, Ocoee, Windermere, East Orlando, College Park, Baldwin Park, and Pine Hills zip-code opportunities."
+    growth: "Growth lens expands beyond the core ZIP set into Horizon West, Ocoee, Windermere, East Orlando, College Park, Baldwin Park, Pine Hills, and culturally specific ZIP opportunities."
   },
   sources: [
     "10 MIL - Sheet1.csv",
@@ -167,6 +187,7 @@ window.MILLENIA_MARKET = {
     "CORE SERVICE AREA - Sheet1.csv",
     "EXTENDED GROWTH MARKET - Sheet1.csv",
     "HCA FSED SISTERS - Sheet1.csv",
+    "GROWTH OPPORTUNITY CORRIDORS - Sheet1.csv",
     "HOME BASE - Sheet1.csv",
     "OCFR EMS UNITS _ STATIONS - Sheet1.csv",
     "ORL FIRE - Sheet1.csv",

@@ -1,5 +1,5 @@
 const market = window.MILLENIA_MARKET;
-const CUSTOM_PIN_STORAGE_KEY = "milleniaEmsCustomPinsV8";
+const CUSTOM_PIN_STORAGE_KEY = "milleniaEmsCustomPinsV10";
 const state = {
   visibleLayers: new Set(market.layerDefinitions.filter((layer) => layer.defaultOn).map((layer) => layer.id)),
   leafletLayers: {},
@@ -16,20 +16,35 @@ const map = L.map("map", {
   scrollWheelZoom: true
 }).setView([28.5016, -81.4182], 10);
 
+const STREET_DETAIL_ZOOM = 14;
+
 state.distanceLayer.addTo(map);
 
 L.control.zoom({ position: "bottomleft" }).addTo(map);
 
-L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}", {
+const imageryLayer = L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}", {
   maxZoom: 19,
   attribution: "Tiles &copy; Esri"
 }).addTo(map);
 
-L.tileLayer("https://services.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}", {
+const streetDetailLayer = L.tileLayer("https://services.arcgisonline.com/ArcGIS/rest/services/Reference/World_Transportation/MapServer/tile/{z}/{y}/{x}", {
+  maxZoom: 19,
+  opacity: 0,
+  attribution: "Streets &copy; Esri"
+}).addTo(map);
+
+const labelLayer = L.tileLayer("https://services.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}", {
   maxZoom: 19,
   opacity: 0.72,
   attribution: "Labels &copy; Esri"
 }).addTo(map);
+
+function updateStreetDetailOverlay() {
+  streetDetailLayer.setOpacity(map.getZoom() >= STREET_DETAIL_ZOOM ? 0.88 : 0);
+}
+
+map.on("zoomend", updateStreetDetailOverlay);
+updateStreetDetailOverlay();
 
 function init() {
   market.layerDefinitions.forEach((definition) => {
@@ -43,6 +58,7 @@ function init() {
   renderPoints();
   renderRoutes();
   renderHeat();
+  renderGrowthOpportunityCorridors();
   updateMetrics();
   renderAssetOptions();
   bindInteractions();
@@ -55,6 +71,14 @@ function init() {
 
 function layerDefinition(id) {
   return market.layerDefinitions.find((layer) => layer.id === id);
+}
+
+function definitionLabel(definition) {
+  return definition.label || definition.name;
+}
+
+function definitionSubtitle(definition) {
+  return definition.subtitle || definition.description || "";
 }
 
 function renderLayerControls() {
@@ -70,7 +94,7 @@ function renderLayerControls() {
     button.setAttribute("aria-pressed", state.visibleLayers.has(definition.id));
     button.innerHTML = `
       <span class="layer-swatch" style="background:${definition.color}"></span>
-      <span class="layer-copy"><strong>${definition.label}</strong><span>${definition.description}</span></span>
+      <span class="layer-copy"><strong>${definitionLabel(definition)}</strong><span>${definitionSubtitle(definition)}</span></span>
       <span class="layer-count">${count}</span>
     `;
     controls.appendChild(button);
@@ -82,7 +106,7 @@ function renderLegend() {
   legend.innerHTML = market.layerDefinitions.map((definition) => `
     <div class="legend-item">
       <span class="legend-dot" style="background:${definition.color}"></span>
-      <span>${definition.label}</span>
+      <span>${definitionLabel(definition)}</span>
     </div>
   `).join("");
 }
@@ -206,6 +230,42 @@ function renderHeat() {
   });
 }
 
+function renderGrowthOpportunityCorridors() {
+  (market.growthOpportunityCorridors || []).forEach((asset) => {
+    const definition = layerDefinition(asset.layer);
+    const radius = Math.max(900, Math.min(3600, 750 + asset.estimatedPopulation / 4.2));
+    const circle = L.circle(asset.coords, {
+      radius,
+      color: definition.color,
+      fillColor: definition.color,
+      fillOpacity: 0.22,
+      opacity: 0.78,
+      weight: 2
+    });
+    decorateShape(circle, {
+      ...asset,
+      notes: `${asset.area}. ${asset.trendPercent}% ZIP trend share; ${asset.estimatedPopulation.toLocaleString()} estimated residents in the source dataset. Source: ${asset.source}.`
+    });
+    addManagedLayer(asset.layer, circle);
+
+    const label = L.marker(asset.coords, {
+      icon: L.divIcon({
+        className: "",
+        html: `<div class="zip-pop-label"><strong>${asset.zip}</strong><span>${asset.trendPercent}%</span></div>`,
+        iconSize: [74, 42],
+        iconAnchor: [37, 21]
+      }),
+      zIndexOffset: 430
+    });
+    decorateShape(label, {
+      ...asset,
+      notes: `${asset.area}. ${asset.trendPercent}% ZIP trend share; ${asset.estimatedPopulation.toLocaleString()} estimated residents in the source dataset. Source: ${asset.source}.`
+    });
+    addManagedLayer(asset.layer, label);
+    state.markerIndex.push({ asset, marker: label });
+  });
+}
+
 function decorateShape(shape, asset) {
   shape.bindPopup(`
     <h3 class="popup-title">${asset.name}</h3>
@@ -241,14 +301,15 @@ function getLayerAssetCount(layerId) {
     ...market.polygons,
     ...(market.rings || []),
     ...market.routes,
-    ...market.heat
+    ...market.heat,
+    ...(market.growthOpportunityCorridors || [])
   ].filter((asset) => asset.layer === layerId).length;
 }
 
 function updateDetail(asset) {
   const detail = document.querySelector("#detailCard");
   detail.classList.remove("is-hidden");
-  const canEditPin = Array.isArray(asset.coords);
+  const canEditPin = Array.isArray(asset.coords) && market.points.includes(asset);
   const coordsText = canEditPin ? `${asset.coords[0].toFixed(6)}, ${asset.coords[1].toFixed(6)}` : "";
   const pinWasMoved = canEditPin && Boolean(state.customPins[getAssetKey(asset)]);
   detail.innerHTML = `
@@ -260,7 +321,7 @@ function updateDetail(asset) {
       <span>${asset.category || asset.type || "Market asset"}</span>
       <span>${asset.priority || asset.intensity || "Strategic"}</span>
       <span>${asset.address || "Operational geography"}</span>
-      <span>${layerDefinition(asset.layer).label}</span>
+      <span>${definitionLabel(layerDefinition(asset.layer))}</span>
     </div>
     ${canEditPin ? `
       <div class="pin-tools">
@@ -296,8 +357,11 @@ function updateMetrics() {
   const stationCount = visiblePoints.filter((asset) => asset.category === "EMS Station" || asset.category === "Fire/EMS Station").length;
   const competitorCount = visiblePoints.filter((asset) => ["advent", "orlandoHealth"].includes(asset.layer)).length;
   const routeCount = state.visibleLayers.has("ops") ? market.routes.length : 0;
+  const growthOpportunityCount = state.visibleLayers.has("growth-opportunity-corridors")
+    ? (market.growthOpportunityCorridors || []).reduce((sum, asset) => sum + asset.estimatedPopulation, 0)
+    : 0;
 
-  document.querySelector("#facilityCount").textContent = visiblePoints.filter((asset) => asset.category !== "EMS Station" && asset.category !== "Fire/EMS Station").length;
+  document.querySelector("#facilityCount").textContent = growthOpportunityCount ? `${Math.round(growthOpportunityCount / 1000)}k` : "0";
   document.querySelector("#stationCount").textContent = stationCount;
   document.querySelector("#competitorCount").textContent = competitorCount;
   document.querySelector("#routeCount").textContent = routeCount;
@@ -484,7 +548,7 @@ function renderAssetOptions() {
 }
 
 function getAssetOptionLabel(asset) {
-  return `${asset.name} | ${asset.system || layerDefinition(asset.layer).label} | ${asset.address || asset.category}`;
+  return `${asset.name} | ${asset.system || definitionLabel(layerDefinition(asset.layer))} | ${asset.address || asset.category}`;
 }
 
 function getDistanceAssets() {
@@ -728,9 +792,9 @@ function searchAssets(query) {
   if (!normalized) return;
 
   const match = state.markerIndex.find(({ asset }) => {
-    return [asset.name, asset.system, asset.category, asset.address, asset.notes]
+    return [asset.name, asset.system, asset.category, asset.address, asset.notes, asset.area, asset.zip]
       .filter(Boolean)
-      .some((value) => value.toLowerCase().includes(normalized));
+      .some((value) => String(value).toLowerCase().includes(normalized));
   });
 
   if (!match) return;

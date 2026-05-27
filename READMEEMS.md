@@ -24,6 +24,7 @@ https://YOUR-GITHUB-USERNAME.github.io/YOUR-REPOSITORY-NAME/
 - Orlando Health hospital and freestanding ER layer
 - Orange County Fire Rescue station layer
 - Orlando Fire Rescue station layer
+- Growth opportunity corridors layer using ZipAtlas ZIP-based demographic trend data
 - EMS operational routes, demand nodes, and corridor overlays
 - Filterable map layers, search, quick-focus buttons, KPI cards, and print view
 
@@ -40,6 +41,7 @@ millenia-ems-market-dashboard/
     CORE SERVICE AREA - Sheet1.csv
     EXTENDED GROWTH MARKET - Sheet1.csv
     HCA FSED SISTERS - Sheet1.csv
+    GROWTH OPPORTUNITY CORRIDORS - Sheet1.csv
     HOME BASE - Sheet1.csv
     OCFR EMS UNITS _ STATIONS - Sheet1.csv
     ORL FIRE - Sheet1.csv

@@ -496,6 +496,36 @@ body.pin-editing .map-stage {
   height: 100%;
 }
 
+.zip-pop-label {
+  display: grid;
+  place-items: center;
+  width: 74px;
+  height: 42px;
+  border: 2px solid rgba(255, 255, 255, 0.92);
+  border-radius: 4px;
+  color: #fff;
+  background: rgba(18, 138, 120, 0.88);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.28);
+  text-align: center;
+}
+
+.zip-pop-label strong,
+.zip-pop-label span {
+  display: block;
+  line-height: 1;
+}
+
+.zip-pop-label strong {
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.zip-pop-label span {
+  margin-top: 4px;
+  font-size: 11px;
+  font-weight: 800;
+}
+
 .detail-card {
   position: absolute;
   z-index: 500;
