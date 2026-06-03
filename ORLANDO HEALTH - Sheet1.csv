@@ -1,0 +1,12 @@
+Facility,Address,Latitude,Longitude,Type,System,Label
+Orlando Health Orlando Regional Medical Center,"52 W Underwood St, Orlando, FL 32806",28.523163,-81.381689,Main Hospital,Orlando Health,ORMC
+Orlando Health Dr. P. Phillips Hospital,"9400 Turkey Lake Rd, Orlando, FL 32819",28.429430,-81.478643,Main Hospital,Orlando Health,Dr. P. Phillips Hospital
+Orlando Health Health Central Hospital,"10000 W Colonial Dr, Ocoee, FL 34761",28.552160,-81.528553,Main Hospital,Orlando Health,Health Central Hospital
+Orlando Health Horizon West Hospital,"17000 Porter Rd, Winter Garden, FL 34787",28.495919,-81.617420,Main Hospital,Orlando Health,Horizon West Hospital
+Orlando Health Winnie Palmer Hospital for Women & Babies,"83 W Miller St, Orlando, FL 32806",28.5214,-81.3781,Women & Babies Hospital,Orlando Health,Winnie Palmer
+Orlando Health Arnold Palmer Hospital for Children,"92 W Miller St, Orlando, FL 32806",28.5212,-81.3784,Pediatric Hospital,Orlando Health,Arnold Palmer
+Orlando Health Emergency Room - Waterford Lakes,"11898 Lake Underhill Rd, Orlando, FL 32825",28.543959,-81.208242,Freestanding ER,Orlando Health,Waterford Lakes ER
+Orlando Health Emergency Room and Medical Pavilion - Osceola,"1001 E Osceola Pkwy, Kissimmee, FL 34744",28.3462,-81.3898,Freestanding ER,Orlando Health,Osceola ER
+Orlando Health Emergency Room - Randal Park,"10155 Dowden Rd, Orlando, FL 32832",28.428909,-81.242512,Freestanding ER,Orlando Health,Randal Park ER
+Orlando Health Emergency Room - Reunion Village,"8011 Osceola Polk Line Rd, Kissimmee, FL 34747",28.2658,-81.6488,Freestanding ER,Orlando Health,Reunion Village ER
+Orlando Health Emergency Room - Longwood,"450 W SR 434, Longwood, FL 32750",28.694145,-81.346821,Freestanding ER,Orlando Health,Longwood ER
